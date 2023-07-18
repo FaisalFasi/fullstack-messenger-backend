@@ -2,10 +2,12 @@ import messages from "./db.js";
 import dotenv from "dotenv";
 dotenv.config();
 
+import cors from "cors";
 import express from "express";
 const app = express();
 
 app.use(express.static("public"));
+app.use(cors());
 
 app.get("/", (req, res) => res.json("Hello World"));
 
