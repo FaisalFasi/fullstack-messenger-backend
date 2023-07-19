@@ -1,0 +1,24 @@
+GET http://localhost:9000/messages
+
+####
+POST http://localhost:9000/messages
+Content-Type: application/json
+
+{
+    "id": "01283091283-1283012938-30249340",
+    "content": "hey this is a test message",
+    "created_at": 1689758332931,
+    "user": "1",
+    "room": "1"
+}
+####
+PUT http://localhost:9000/messages/01283091283-1283012938-30249340
+Content-Type: application/json
+
+{
+    "content": "hey this is a updated test message"
+}
+ 
+####
+DELETE http://localhost:9000/messages/01283091283-1283012938-30249340
+
