@@ -8,7 +8,10 @@ const app = express();
 // database
 const messages = [];
 
+//  to make public folder available for everyone
 app.use(express.static("public"));
+
+//  cross origin resources sharing
 app.use(cors());
 
 // check if my request have a body type json
@@ -17,17 +20,19 @@ app.use(express.json());
 app.get("/messages", (req, res) => res.json(messages));
 
 app.post("/messages", (req, res) => {
-  const newDocument = { ...req.body, id: uuidv4(), created_at: Date.now() };
-  messages.push(newDocument);
-  res.status(201).json(newDocument);
-  res.send("Thanks didnt asked");
+  if (!req.body.username || !req.body.content) {
+    //  400 is a bad request error
+    res.status(400).send("username and content are required");
+  } else {
+    const newDocument = { ...req.body, id: uuidv4(), created_at: Date.now() };
+    messages.push(newDocument);
+    res.status(201).json(newDocument);
+  }
 });
 
 app.put("/messages/:id", (req, res) => {
-  console.log(req.params.id, req.body);
   const id = req.params.id;
   const indexOfId = messages.findIndex((message) => message.id == id);
-  console.log(req.params, messages);
   messages[indexOfId].content = req.body.content;
   res.status(200).json(messages[indexOfId]);
 });
